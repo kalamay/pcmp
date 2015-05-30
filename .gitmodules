@@ -1,0 +1,3 @@
+[submodule "test/mu"]
+	path = test/mu
+	url = git@github.com:kalamay/mu.git
