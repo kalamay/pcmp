@@ -1,6 +1,6 @@
 /*
  * range16.h
- * pcmp
+ * https://github.com/kalamay/pcmp
  *
  * Copyright (c) 2015, Jeremy Larkin
  * All rights reserved.
