@@ -86,6 +86,8 @@ pcmp_set (const uint8_t *restrict cmp, int clen, const uint8_t *restrict set, in
 
 # else
 
+#include <stddef.h>
+
 static inline const uint8_t *
 pcmp_set (const uint8_t *restrict cmp, int clen, const uint8_t *restrict set, int slen)
 {

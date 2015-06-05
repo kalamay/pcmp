@@ -89,6 +89,8 @@ pcmp_range (const uint8_t *restrict cmp, int clen, const uint8_t *restrict rng, 
 
 # else
 
+#include <stddef.h>
+
 static inline const uint8_t *
 pcmp_range (const uint8_t *restrict cmp, int clen, const uint8_t *restrict rng, int rlen)
 {
