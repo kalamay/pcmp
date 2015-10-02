@@ -44,7 +44,8 @@
  * @return  pointer to match or NULL
  */
 static inline const uint8_t *
-pcmp_set16 (const uint8_t *restrict cmp, int clen, const uint8_t *restrict set, int slen)
+pcmp_set16 (const uint8_t *restrict cmp, int clen,
+            const uint8_t *restrict set, int slen)
 {
 	// load set
 	const __m128i s1 = _mm_lddqu_si128 ((const __m128i *)set);

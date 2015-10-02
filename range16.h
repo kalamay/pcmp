@@ -47,7 +47,8 @@
  * @return  pointer to match or NULL
  */
 static inline const uint8_t *
-pcmp_range16 (const uint8_t *restrict cmp, int clen, const uint8_t *restrict rng, int rlen)
+pcmp_range16 (const uint8_t *restrict cmp, int clen,
+              const uint8_t *restrict rng, int rlen)
 {
 	// load range
 	const __m128i s1 = _mm_lddqu_si128 ((const __m128i *)rng);

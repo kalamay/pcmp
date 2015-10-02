@@ -49,7 +49,8 @@
  * @return  pointer to match or NULL
  */
 static inline const uint8_t *
-pcmp_range (const uint8_t *restrict cmp, int clen, const uint8_t *restrict rng, int rlen)
+pcmp_range (const uint8_t *restrict cmp, int clen,
+            const uint8_t *restrict rng, int rlen)
 {
 	if (pcmp_likely (rlen <= 16)) {
 		return pcmp_range16 (cmp, clen, rng, rlen);
@@ -92,7 +93,8 @@ pcmp_range (const uint8_t *restrict cmp, int clen, const uint8_t *restrict rng, 
 #include <stddef.h>
 
 static inline const uint8_t *
-pcmp_range (const uint8_t *restrict cmp, int clen, const uint8_t *restrict rng, int rlen)
+pcmp_range (const uint8_t *restrict cmp, int clen,
+            const uint8_t *restrict rng, int rlen)
 {
 	for (int i = 0; i < clen; i++, cmp++) {
 		for (int r = 0; r < rlen; r += 2) {

@@ -46,7 +46,8 @@
  * @return  pointer to match or NULL
  */
 static inline const uint8_t *
-pcmp_set (const uint8_t *restrict cmp, int clen, const uint8_t *restrict set, int slen)
+pcmp_set (const uint8_t *restrict cmp, int clen,
+          const uint8_t *restrict set, int slen)
 {
 	if (pcmp_likely (slen <= 16)) {
 		return pcmp_set16 (cmp, clen, set, slen);
@@ -89,7 +90,8 @@ pcmp_set (const uint8_t *restrict cmp, int clen, const uint8_t *restrict set, in
 #include <stddef.h>
 
 static inline const uint8_t *
-pcmp_set (const uint8_t *restrict cmp, int clen, const uint8_t *restrict set, int slen)
+pcmp_set (const uint8_t *restrict cmp, int clen,
+          const uint8_t *restrict set, int slen)
 {
 	for (int i = 0; i < clen; i++, cmp++) {
 		for (int s = 0; s < slen; s++) {

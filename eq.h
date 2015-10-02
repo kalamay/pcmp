@@ -52,7 +52,8 @@ pcmp_eq (const uint8_t *restrict s1, const uint8_t *restrict s2, int n)
 		__m128i m1 = _mm_lddqu_si128 ((const __m128i *)s1);
 		__m128i m2 = _mm_lddqu_si128 ((const __m128i *)s2);
 		// compare strings and find the last matched index
-		c = _mm_cmpestri (m1, n - result, m2, 16, _SIDD_CMP_EQUAL_EACH | _SIDD_MASKED_NEGATIVE_POLARITY);
+		c = _mm_cmpestri (m1, n - result, m2, 16,
+				_SIDD_CMP_EQUAL_EACH | _SIDD_MASKED_NEGATIVE_POLARITY);
 		// update positions
 		s1 += 16;
 		s2 += 16;
