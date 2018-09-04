@@ -47,7 +47,7 @@ pcmp_leq (const uint8_t *restrict s1, const uint8_t *restrict s2, int n)
 {
 	int c, result = 0;
 
-	static const uint8_t brng[2]  = {'A','Z'};
+	static const uint8_t brng[16] = {'A','Z'};
 	static const uint8_t badd[16] = {
 		32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32
 	};
