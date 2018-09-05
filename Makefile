@@ -1,36 +1,48 @@
-CFLAGS := -std=c99 -Wall -Wextra -pedantic -Werror -O3
+CFLAGS := -std=c99 -Wall -Wextra -pedantic -Werror -O2 -g
 BUILD := build
-DEF_INC := $(BUILD)/inc/def
-DEF_BIN := $(BUILD)/bin/def
-SSE_INC := $(BUILD)/inc/sse
-SSE_BIN := $(BUILD)/bin/sse
+BIN := $(BUILD)/bin
+OBJ := $(BUILD)/obj
 TESTS := $(patsubst test/%.c,%,$(wildcard test/*.c))
+PERFS := $(patsubst test/perf/%.c,%,$(wildcard test/perf/*.c))
 
 all: test
 
-test: test-def test-sse
+test: test-basic test-sse test-avx
 
-test-def: $(TESTS:%=$(DEF_BIN)/%)
+test-basic: $(TESTS:%=$(BIN)/%-basic)
 	@echo "*** default tests ***"
 	@for name in $^; do ./$$name || exit; done
 
-test-sse: $(TESTS:%=$(SSE_BIN)/%)
+test-sse: $(TESTS:%=$(BIN)/%-sse)
 	@echo "*** sse4.2 tests ***"
 	@for name in $^; do ./$$name || exit; done
 
--include $(wildcard $(DEF_INC)/*.d) $(wildcard $(SSE_INC)/*.d)
+test-avx: $(BIN)/eq-avx $(BIN)/leq-avx #$(TESTS:%=$(BIN)/%-avx)
+	@echo "*** avx2 tests ***"
+	@for name in $^; do ./$$name || exit; done
 
-$(DEF_BIN)/%: test/%.c | $(DEF_INC) $(DEF_BIN)
-	$(CC) $(CFLAGS) -MMD -MT $@ -MF $(DEF_INC)/$*.d $< -o $@
+perf: $(PERFS:%=$(BIN)/%-perf)
+	@for name in $^; do ./$$name || exit; done
 
-$(SSE_BIN)/%: test/%.c | $(SSE_INC) $(SSE_BIN)
-	$(CC) $(CFLAGS) -msse4.2 -MMD -MT $@ -MF $(SSE_INC)/$*.d $< -o $@
+-include $(wildcard $(OBJ)/*.d)
 
-$(DEF_INC) $(SSE_INC) $(DEF_BIN) $(SSE_BIN):
+$(BIN)/%-basic: test/%.c | $(OBJ) $(BIN)
+	$(CC) $(CFLAGS) -MMD -MT $@ -MF $(OBJ)/$*-basic.d $< -o $@
+
+$(BIN)/%-sse: test/%.c | $(OBJ) $(BIN)
+	$(CC) $(CFLAGS) -msse4 -MMD -MT $@ -MF $(OBJ)/$*-sse.d $< -o $@
+
+$(BIN)/%-avx: test/%.c | $(OBJ) $(BIN)
+	$(CC) $(CFLAGS) -mavx2 -MMD -MT $@ -MF $(OBJ)/$*-avx.d $< -o $@
+
+$(BIN)/%-perf: test/perf/%.c | $(OBJ) $(BIN)
+	$(CC) $(CFLAGS) -march=native -MMD -MT $@ -MF $(OBJ)/$*-perf.d $< -o $@
+
+$(BIN) $(OBJ):
 	@mkdir -p $@
 
 clean:
 	rm -rf build
 
-.PHONY: clean test
+.PHONY: clean test test-basic test-sse perf
 

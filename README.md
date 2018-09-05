@@ -15,7 +15,7 @@ To run the test suite:
 Compares the case-sensitive equality of two strings.
 
 ```c
-int pcmp_eq (const uint8_t *restrict s1, const uint8_t *restrict s2, int n);
+int pcmp_eq (const uint8_t *s1, const uint8_t *s2, int n);
 ```
 
 ### `pcmp_leq`
@@ -23,7 +23,7 @@ int pcmp_eq (const uint8_t *restrict s1, const uint8_t *restrict s2, int n);
 Compares the equality of a mixed case string to a lower case string.
 
 ```c
-int pcmp_leq (const uint8_t *restrict s1, const uint8_t *restrict s2, int n);
+int pcmp_leq (const uint8_t *s1, const uint8_t *s2, int n);
 ```
 
 ### `pcmp_range`
@@ -31,7 +31,7 @@ int pcmp_leq (const uint8_t *restrict s1, const uint8_t *restrict s2, int n);
 Finds the the first character matching the range string.
 
 ```c
-const uint8_t *pcmp_range (const uint8_t *restrict cmp, int clen, const uint8_t *restrict rng, int rlen);
+const uint8_t *pcmp_range (const uint8_t *cmp, int clen, const uint8_t *rng, int rlen);
 ```
 
 The range string is a sequence of character pairs where the range is a value inclusively between the pair of characters.
@@ -41,5 +41,5 @@ The range string is a sequence of character pairs where the range is a value inc
 Finds the the first character matching any character in the set string.
 
 ```c
-const uint8_t *pcmp_set (const uint8_t *restrict cmp, int clen, const uint8_t *restrict set, int slen);
+const uint8_t *pcmp_set (const uint8_t *cmp, int clen, const uint8_t *set, int slen);
 ```

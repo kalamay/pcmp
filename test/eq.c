@@ -1,22 +1,63 @@
 #include "mu/mu.h"
 #include "../eq.h"
-#include "../eq16.h"
+
+#include "load_all.h"
+#include "assert_all.h"
 
 int
 main (void)
 {
-	const uint8_t s1[] = "short";
-	const uint8_t s2[] = "Short";
-	const uint8_t s3[] = "some longer value with a different word";
-	const uint8_t s4[] = "some longer value with a different Word";
+	mu_init ("eq");
 
-	mu_assert_int_eq (1, pcmp_eq (s1, s1, sizeof s1 - 1));
-	mu_assert_int_eq (0, pcmp_eq (s1, s2, sizeof s1 - 1));
-	mu_assert_int_eq (1, pcmp_eq16 (s1, s1, sizeof s1 - 1));
-	mu_assert_int_eq (0, pcmp_eq16 (s1, s2, sizeof s1 - 1));
-	mu_assert_int_eq (1, pcmp_eq (s3, s3, sizeof s3 - 1));
-	mu_assert_int_eq (0, pcmp_eq (s3, s4, sizeof s3 - 1));
+	load_all ();
+	assert_all ();
 
-	mu_exit ("eq");
+	mu_assert_int_eq (1, pcmp_eq (short_str, short_str, short_str_len));
+	mu_assert_int_eq (1, pcmp_eq (short_str+1, short_str+1, short_str_len-1));
+	mu_assert_int_eq (0, pcmp_eq (short_str, short_upper0, short_str_len));
+	mu_assert_int_eq (1, pcmp_eq (short_str+1, short_upper0+1, short_str_len-1));
+	mu_assert_int_eq (1, pcmp_eq (med_str, med_str, med_str_len));
+	mu_assert_int_eq (1, pcmp_eq (med_str+1, med_str+1, med_str_len-1));
+	mu_assert_int_eq (0, pcmp_eq (med_str, med_upper35, med_str_len));
+	mu_assert_int_eq (0, pcmp_eq (med_str+1, med_upper35+1, med_str_len-1));
+
+	mu_assert_int_eq (1, pcmp_eq (lorem, lorem, lorem_len));
+	mu_assert_int_eq (1, pcmp_eq (lorem+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_lower, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_lower+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_bang, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_bang+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper15, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper15+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper16, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper16+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper31, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper31+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper32, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper32+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper47, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper47+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper48, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper48+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper64, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_upper64+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff15, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff15+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff16, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff16+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff31, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff31+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff32, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff32+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff47, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff47+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff48, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff48+1, lorem+1, lorem_len-1));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff64, lorem, lorem_len));
+	mu_assert_int_eq (0, pcmp_eq (lorem_diff64+1, lorem+1, lorem_len-1));
+
+	unload_all ();
+
+	mu_exit ();
 }
 
